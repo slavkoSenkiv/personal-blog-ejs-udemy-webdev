@@ -1,12 +1,19 @@
+<!-- add bootstrap to the form to make it look like in the video 267 -->
 <%- include('partials/header'); -%>
 
 <h1>Compose</h1>
 <form action="/compose" method="post">
-    <label for="titleInput">Title</label>
-    <input type="text" name="titleInput">  
-    <label for="postInput">Post</label>
-    <input type="text" name="postInput">  
-    <button type="submit" >Publish</button>
+
+    <div class="form-group">
+            <label>Title</label>
+            <input type="text" name="titleInput" class="form-control" placeholder="Your title here"> 
+     
+            <label>Post</label>
+            <textarea type="text" name="postInput" class="form-control" placeholder="Your post here" rows="5" cols="30"></textarea>
+    
+            <button type="submit" class="btn btn-primary" name="button">Publish</button>
+    </div>
+
 </form>
 
 
