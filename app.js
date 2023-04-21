@@ -2,6 +2,8 @@
 
 const express = require("express");
 const ejs = require("ejs");
+const lodash = require('lodash');
+
 const app = express();
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({extended: true}));
@@ -21,8 +23,12 @@ app.get('/', function(req, res){
 
 app.get('/posts/:postUrl', function(req, res){
   postsLst.forEach(function(post){
-    if(post.titleInput = req.params.postUrl){
+    let kebabCaseTitle = lodash.kebabCase(post.titleInput);
+    if(kebabCaseTitle === req.params.postUrl){
       res.render('post', {post:post});
+      console.log('MATCH');
+    }else{
+      console.log('NOT a match');
     }
   });
 });
