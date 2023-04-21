@@ -4,9 +4,11 @@
 
 <p><%= homeStartingContent %> </p>
 
-<% for (let i=0; i < postsLst.length; i++){ %>
-    <h2><%= postsLst[i].titleInput %> </h2>
-    <p><%= postsLst[i].postInput %> </p>
-<%  } %>
+<% postsLst.forEach(function(post){ %>
+    <h2><%= post.titleInput %> </h2>
+    <p><%= post.postInput %> </p>
+<% }); %>
+    
+
 
 <%- include('partials/footer'); -%>    
