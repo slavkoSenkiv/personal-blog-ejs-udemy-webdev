@@ -27,9 +27,7 @@ app.get('/posts/:postUrl', function(req, res){
     if(kebabCaseTitle === req.params.postUrl){
       res.render('post', {post:post});
       console.log('MATCH');
-    }else{
-      console.log('NOT a match');
-    }
+    };
   });
 });
 
