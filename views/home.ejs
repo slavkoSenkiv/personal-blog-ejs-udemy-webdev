@@ -4,12 +4,12 @@
 
 <p><%= homeStartingContent %> </p>
 
-<% postsLst.forEach(function(post){ %>
+<% postsLst.forEach(function(blogPost){ %>
 
-    <% let postDescr = post.postInput.substring(0, 100) + "..." %>
-    <% let readMore = '/posts/' + post.titleInput %>
+    <% let postDescr = blogPost.postInput.substring(0, 100) + "..." %>
+    <% let readMore = '/posts/' + blogPost.titleInput %>
 
-    <h2><%= post.titleInput %></h2>
+    <h2><%= blogPost.titleInput %></h2>
     <p><%= postDescr %><a href= <%= readMore %> >Read more</a></p>
     
 <% }); %>
