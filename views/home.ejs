@@ -8,7 +8,6 @@
 
         <% let postDescr = blogPost.post.substring(0, 100) + "..." %>
         <% let readMoreLink = '/posts/' + blogPost.title %>
-        <% console.log('frontend readMore link', readMoreLink) %>
 
         <h2><%= blogPost.title %></h2>
         <p><%= postDescr %><a href= "<%= readMoreLink %>" >Read more</a></p>

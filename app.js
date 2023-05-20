@@ -9,7 +9,7 @@ app.set('view engine', 'ejs');
 
 //sequelize boilerplate
 const Sequelize = require('sequelize');
-const {DataTypes, Op} = Sequelize;
+const {DataTypes} = Sequelize;
 
 let sequelize;
 if (process.env.NODE_ENV === 'production'){
@@ -79,7 +79,6 @@ function refreshPostsArray(){
         results.forEach((blogpost)=>{
           postsArray.push(blogpost.dataValues);
         });
-        //console.log('postsArray is refreshed');
         resolve();
       })
       .catch((error) => {
@@ -119,18 +118,13 @@ app.post('/compose', function(req, res){
 app.get('/posts/:postUrl', function(req, res){
 
   let urlParams = req.params.postUrl;  
-  //console.log('urlParams', urlParams);
 
   let kebabUrlParams = lodash.kebabCase(urlParams);   
-  //console.log('kebabUrlParams', kebabUrlParams);
 
   refreshPostsArray()
     .then(()=>{
-
       postsArray.forEach(function(blogPost){
-
         let kebabBlogPostTitle = lodash.kebabCase(blogPost.title); 
-        //console.log('kebabBlogPostTitle', kebabBlogPostTitle);
 
         if(kebabBlogPostTitle === kebabUrlParams){
           console.log(blogPost, ' title FOUND in db');
