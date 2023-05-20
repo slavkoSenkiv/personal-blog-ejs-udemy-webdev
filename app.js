@@ -55,6 +55,9 @@ const Blogpost = sequelize.define('blogpost', {
   title:{
     type: DataTypes.STRING,
   },
+  urlpart:{
+    type: DataTypes.STRING
+  },
   post:{
     type: DataTypes.TEXT
   }
@@ -75,8 +78,9 @@ app.get('/', function(req, res){
   Blogpost.findAll()
     .then((results) => {
       results.forEach((blogpost)=>{
-        console.log(blogpost.dataValues);
+        postsLst.push(blogpost.dataValues);
       });
+      console.log('postsLst from get "/"', postsLst);
     })
     .catch((error) => {
       console.error('Error executing query:', error);
@@ -89,11 +93,27 @@ app.get('/', function(req, res){
 });
 
 app.get('/posts/:postUrl', function(req, res){
-  postsLst.forEach(function(post){
-    let kebabCaseTitle = lodash.kebabCase(post.titleInput);
-    if(kebabCaseTitle === req.params.postUrl){
-      res.render('post', {post:post});
-      console.log('MATCH');
+
+  Blogpost.findAll()
+  .then((results) => {
+    results.forEach((blogpost)=>{
+      let dbPostRow = blogpost.dataValues;
+      postsLst.push(dbPostRow);
+    });
+    console.log('postsLst', postsLst);
+  })
+  .catch((error) => {
+    console.error('Error executing query:', error);
+  });
+
+  postsLst.forEach(function(blogPost){
+    //let kebabCaseTitle = lodash.kebabCase(blogPost.title);
+    console.log('blogPost', blogPost);
+    if(blogPost.urlpart === req.params.postUrl){
+      console.log(blogPost, ' title FOUND in db');
+      res.render('post', {blogPost:blogPost});
+    }else{
+      console.log(blogPost, ' title not found in db');
     };
   });
 });
@@ -111,12 +131,10 @@ app.get('/compose', function(req, res){
 });
 
 app.post('/compose', function(req, res){
-  const blogPost = {titleInput: req.body.titleInput, postInput: req.body.postInput};
-  postsLst.push(blogPost);
-  console.log(postsLst);
 
   const newBlogPost = Blogpost.build({
     title: blogPost.titleInput,
+    urlpart: lodash.kebabCase(blogPost.titleInput),
     post: blogPost.postInput
   });
   newBlogPost.save();
@@ -126,5 +144,5 @@ app.post('/compose', function(req, res){
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`App listening on 1port ${PORT}`);
+  console.log(`App listening on port ${PORT}`);
 });
