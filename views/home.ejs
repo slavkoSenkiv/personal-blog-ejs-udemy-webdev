@@ -4,16 +4,15 @@
 
 <p><%= homeStartingContent %> </p>
 
-<% postsLst.forEach(function(blogPost){ %>
+    <% postsArray.forEach((blogPost)=>{ %>
 
-    <% let postDescr = blogPost.postInput.substring(0, 100) + "..." %>
-    <% let readMore = '/posts/' + blogPost.titleInput %>
+        <% let postDescr = blogPost.post.substring(0, 100) + "..." %>
+        <% let readMoreLink = '/posts/' + blogPost.title %>
+        <% console.log('frontend readMore link', readMoreLink) %>
 
-    <h2><%= blogPost.titleInput %></h2>
-    <p><%= postDescr %><a href= <%= readMore %> >Read more</a></p>
-    
-<% }); %>
-    
-
+        <h2><%= blogPost.title %></h2>
+        <p><%= postDescr %><a href= "<%= readMoreLink %>" >Read more</a></p>
+        
+    <% }); %>  
 
 <%- include('partials/footer'); -%>    
